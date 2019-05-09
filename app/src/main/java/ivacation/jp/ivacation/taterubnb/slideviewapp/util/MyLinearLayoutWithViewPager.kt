@@ -9,23 +9,21 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import ivacation.jp.ivacation.taterubnb.slideviewapp.R
+import kotlinx.android.synthetic.main.my_view_page.view.*
+import org.jetbrains.anko.longToast
+import org.jetbrains.anko.toast
 import java.util.ArrayList
 
 class MyLinearLayoutWithViewPager// TODO Auto-generated constructor stub
     (context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
-    var viewPager: MyViewPager
-    private var group: ViewGroup
     private lateinit var textView: TextView
     private lateinit var textViews: Array<TextView?>
-    private var _context: Context = context
     private val myPages = ArrayList<View>()
 
     init {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         inflater.inflate(R.layout.my_view_page, this)
-        viewPager = findViewById<MyViewPager>(R.id.pager)
-        group = findViewById<ViewGroup>(R.id.viewGroup)
     }
 
     /**
@@ -33,12 +31,12 @@ class MyLinearLayoutWithViewPager// TODO Auto-generated constructor stub
      * @param list
      */
     fun setList(list: ArrayList<View>) {
-        group.removeAllViews()
+        viewGroup.removeAllViews()
         textViews = arrayOfNulls(list.size)
         for (i in list.indices) {
             //2ページ以上になる場合は、1ループごとにインジケータ用のViewを足しておく
             if (list.size > 1) {
-                textView = TextView(_context)
+                textView = TextView(context)
                 val lp = LinearLayout.LayoutParams(60, 60)
                 lp.rightMargin = 10
                 lp.leftMargin = 10
@@ -47,29 +45,38 @@ class MyLinearLayoutWithViewPager// TODO Auto-generated constructor stub
                 textView.setPadding(0, 0, 0, 0)
                 textViews[i] = textView
 
-                textViews[i]?.setBackgroundResource(R.drawable.carrot)
+                textViews[i]?.setBackgroundResource(R.drawable.radio)
                 if (i == 0) {
                     textViews[i]?.let { setRadioStyle(it, true) }
                 } else {
                     textViews[i]?.let { setRadioStyle(it, false) }
                 }
-                group.addView(textViews[i])
+                viewGroup.addView(textViews[i])
             }
 
             myPages.add(list[i])
         }
-        viewPager.adapter = MyViewPagerAdapter(list)
-        viewPager.setOnPageChangeListener(MyListener())
+
+        checkbox.setOnClickListener {
+            if (checkbox.isChecked){
+                context.toast("チェックされました")
+            } else {
+                context.toast("チェックが外れました")
+            }
+        }
+
+        pager.adapter = MyViewPagerAdapter(list)
+        pager.setOnPageChangeListener(MyListener())
     }
 
     private fun setRadioStyle(tv: TextView, selected: Boolean) {
         val lp = tv.layoutParams
         if (selected) {
-            lp.height = 50
-            lp.width = 50
+            lp.height = 35
+            lp.width = 35
         } else {
-            lp.height = 40
-            lp.width = 40
+            lp.height = 20
+            lp.width = 20
         }
         tv.layoutParams = lp
     }
@@ -87,6 +94,10 @@ class MyLinearLayoutWithViewPager// TODO Auto-generated constructor stub
                 } else {
                     textViews[i]?.let { setRadioStyle(it, true) }
                 }
+
+                ll_checkbox.visibility = if (arg0 == textViews.lastIndex){
+                    View.VISIBLE
+                } else { View.GONE }
             }
         }
 

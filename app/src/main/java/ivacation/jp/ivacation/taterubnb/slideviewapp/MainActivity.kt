@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.LinearLayout
 import io.reactivex.android.schedulers.AndroidSchedulers
 import ivacation.jp.ivacation.taterubnb.slideviewapp.api.Client
-import ivacation.jp.ivacation.taterubnb.slideviewapp.util.MyLinearLayoutWithViewPager
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.my_view_page_layout.view.*
 import org.jetbrains.anko.longToast
@@ -70,46 +69,74 @@ class MainActivity : AppCompatActivity() {
     val list_ZH_CH = listOf<String>(ZH_CH1, ZH_CH2, ZH_CH3, ZH_CH4, ZH_CH5, ZH_CH6, ZH_CH7)
     val list_ZH_TW = listOf<String>(ZH_TW1, ZH_TW2, ZH_TW3, ZH_TW4, ZH_TW5, ZH_TW6, ZH_TW7)
 
+    private lateinit var filePath: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        filePath = cacheDir.absolutePath + "/"
     }
 
     override fun onResume() {
         super.onResume()
 
         val list = ArrayList<View>()
-        val client = Client(this)
-        getPng(client, list_EN)
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { progress_bar.visibility = View.VISIBLE }
-            .subscribe({ filePath ->
-                val bitmap = try {
-                    BitmapFactory.decodeFile(filePath)
-                } catch (e: Exception){
-                    longToast("画像取得失敗")
-                    Log.e("getFILE ", "$e")
-                    null
-                }?: return@subscribe
 
-                val pager = LayoutInflater.from(this).inflate(R.layout.my_view_page_layout, null) as LinearLayout
-                pager.image.setImageBitmap(bitmap)
-
-                list.add(pager)
-            },{
-                longToast("error; $it")
-                Log.e("Exception ", " $it")
-            },{
-                progress_bar.visibility = View.VISIBLE
-                viewPager.setList(list)
-            })
+        list_KO.forEach{endPoint ->
+            val absolutePath = filePath + endPoint.replace("/", "_")
+            val image = getImageForViewPager(absolutePath)
+            if (image == null){
+                list.clear()
+                if (endPoint == list_KO[list_KO.lastIndex]) {
+                    val client = Client(this)
+                    getPngFromServer(client, list_KO)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnSubscribe { progress_bar.visibility = View.VISIBLE }
+                        .subscribe({ filePath ->
+                            val image = getImageForViewPager(filePath)
+                            if (image == null) {
+                                Exception("取得失敗")
+                            } else {
+                                list.add(image)
+                            }
+                        }, {
+                            progress_bar.visibility = View.GONE
+                            longToast("error; $it")
+                            Log.e("Exception ", " $it")
+                        }, {
+                            progress_bar.visibility = View.GONE
+                            viewPager.setList(list)
+                        })
+                }
+            } else {
+                list.add(image)
+                if (endPoint == list_KO[list_KO.lastIndex]){
+                    viewPager.setList(list)
+                }
+            }
+        }
     }
 
-    private fun getPng(client: Client, list: List<String>, index: Int = 0): Observable<String> = when(index){
+    private fun getPngFromServer(client: Client, list: List<String>, index: Int = 0): Observable<String> = when(index){
         in 0.. list.lastIndex -> {
-            Observable.concat(client.getPng(list[index]).toObservable(), getPng(client, list, index + 1))
+            Observable.concat(client.getPng(list[index]).toObservable(), getPngFromServer(client, list, index + 1))
         }
         else -> Observable.empty()
     }
 
+    private fun getImageForViewPager(filePath: String): View?{
+        val bitmap = try {
+            BitmapFactory.decodeFile(filePath)
+        } catch (e: Exception){
+            longToast("画像取得失敗")
+            Log.e("getFILE ", "$e")
+            null
+        }?: return null
+
+        val pager = LayoutInflater.from(this).inflate(R.layout.my_view_page_layout, null)
+        pager.image.setImageBitmap(bitmap)
+
+        return pager
+    }
 }
