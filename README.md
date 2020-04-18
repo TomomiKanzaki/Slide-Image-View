@@ -11,3 +11,7 @@
 - Rx
 - ViewPager
 - 通信処理の直列化
+
+
+
+![slide-image](https://user-images.githubusercontent.com/35129131/79640085-9d42d080-81ca-11ea-8dd9-e5a68c40b1f5.gif)
