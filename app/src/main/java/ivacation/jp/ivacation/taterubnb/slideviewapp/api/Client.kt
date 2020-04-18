@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit
 
 class Client(val context: Context) {
 
-    private val baseUrl = "https://stg-regist.smart-check.in/"
+    private val baseUrl = "http://192.168.2.124:8000/static/"
 
     private val service = restClient().create(Service::class.java)
 

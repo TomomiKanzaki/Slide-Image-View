@@ -27,47 +27,47 @@ import java.io.IOException
 
 class MainActivity : AppCompatActivity() {
 
-    val EN1 = "house_rules/1/en/1.png"
-    val EN2 = "house_rules/1/en/2.png"
-    val EN3 = "house_rules/1/en/3.png"
-    val EN4 = "house_rules/1/en/4.png"
-    val EN5 = "house_rules/1/en/5.png"
-    val EN6 = "house_rules/1/en/6.png"
-    val EN7 = "house_rules/1/en/7.png"
-    val JA1 = "house_rules/1/ja/1.png"
-    val JA2 = "house_rules/1/ja/2.png"
-    val JA3 = "house_rules/1/ja/3.png"
-    val JA4 = "house_rules/1/ja/4.png"
-    val JA5 = "house_rules/1/ja/5.png"
-    val JA6 = "house_rules/1/ja/6.png"
-    val JA7 = "house_rules/1/ja/7.png"
-    val KO1 = "house_rules/1/ko/1.png"
-    val KO2 = "house_rules/1/ko/2.png"
-    val KO3 = "house_rules/1/ko/3.png"
-    val KO4 = "house_rules/1/ko/4.png"
-    val KO5 = "house_rules/1/ko/5.png"
-    val KO6 = "house_rules/1/ko/6.png"
-    val KO7 = "house_rules/1/ko/7.png"
-    val ZH_CH1 = "house_rules/1/zh-ch/1.png"
-    val ZH_CH2 = "house_rules/1/zh-ch/2.png"
-    val ZH_CH3 = "house_rules/1/zh-ch/3.png"
-    val ZH_CH4 = "house_rules/1/zh-ch/4.png"
-    val ZH_CH5 = "house_rules/1/zh-ch/5.png"
-    val ZH_CH6 = "house_rules/1/zh-ch/6.png"
-    val ZH_CH7 = "house_rules/1/zh-ch/7.png"
-    val ZH_TW1 = "house_rules/1/zh-tw/1.png"
-    val ZH_TW2 = "house_rules/1/zh-tw/2.png"
-    val ZH_TW3 = "house_rules/1/zh-tw/3.png"
-    val ZH_TW4 = "house_rules/1/zh-tw/4.png"
-    val ZH_TW5 = "house_rules/1/zh-tw/5.png"
-    val ZH_TW6 = "house_rules/1/zh-tw/6.png"
-    val ZH_TW7 = "house_rules/1/zh-tw/7.png"
-
-    val list_EN = listOf<String>(EN1, EN2, EN3, EN4, EN5, EN6, EN7)
-    val list_JA = listOf<String>(JA1, JA2, JA3, JA4, JA5, JA6, JA7)
+//    val EN1 = "house_rules/1/en/1.png"
+//    val EN2 = "house_rules/1/en/2.png"
+//    val EN3 = "house_rules/1/en/3.png"
+//    val EN4 = "house_rules/1/en/4.png"
+//    val EN5 = "house_rules/1/en/5.png"
+//    val EN6 = "house_rules/1/en/6.png"
+//    val EN7 = "house_rules/1/en/7.png"
+//    val JA1 = "house_rules/1/ja/1.png"
+//    val JA2 = "house_rules/1/ja/2.png"
+//    val JA3 = "house_rules/1/ja/3.png"
+//    val JA4 = "house_rules/1/ja/4.png"
+//    val JA5 = "house_rules/1/ja/5.png"
+//    val JA6 = "house_rules/1/ja/6.png"
+//    val JA7 = "house_rules/1/ja/7.png"
+    val KO1 = "test1.png"
+    val KO2 = "test2.png"
+    val KO3 = "test3.png"
+    val KO4 = "test4.png"
+    val KO5 = "test5.png"
+    val KO6 = "test6.png"
+    val KO7 = "test7.png"
+//    val ZH_CH1 = "house_rules/1/zh-ch/1.png"
+//    val ZH_CH2 = "house_rules/1/zh-ch/2.png"
+//    val ZH_CH3 = "house_rules/1/zh-ch/3.png"
+//    val ZH_CH4 = "house_rules/1/zh-ch/4.png"
+//    val ZH_CH5 = "house_rules/1/zh-ch/5.png"
+//    val ZH_CH6 = "house_rules/1/zh-ch/6.png"
+//    val ZH_CH7 = "house_rules/1/zh-ch/7.png"
+//    val ZH_TW1 = "house_rules/1/zh-tw/1.png"
+//    val ZH_TW2 = "house_rules/1/zh-tw/2.png"
+//    val ZH_TW3 = "house_rules/1/zh-tw/3.png"
+//    val ZH_TW4 = "house_rules/1/zh-tw/4.png"
+//    val ZH_TW5 = "house_rules/1/zh-tw/5.png"
+//    val ZH_TW6 = "house_rules/1/zh-tw/6.png"
+//    val ZH_TW7 = "house_rules/1/zh-tw/7.png"
+//
+//    val list_EN = listOf<String>(EN1, EN2, EN3, EN4, EN5, EN6, EN7)
+//    val list_JA = listOf<String>(JA1, JA2, JA3, JA4, JA5, JA6, JA7)
     val list_KO = listOf<String>(KO1, KO2, KO3, KO4, KO5, KO6, KO7)
-    val list_ZH_CH = listOf<String>(ZH_CH1, ZH_CH2, ZH_CH3, ZH_CH4, ZH_CH5, ZH_CH6, ZH_CH7)
-    val list_ZH_TW = listOf<String>(ZH_TW1, ZH_TW2, ZH_TW3, ZH_TW4, ZH_TW5, ZH_TW6, ZH_TW7)
+//    val list_ZH_CH = listOf<String>(ZH_CH1, ZH_CH2, ZH_CH3, ZH_CH4, ZH_CH5, ZH_CH6, ZH_CH7)
+//    val list_ZH_TW = listOf<String>(ZH_TW1, ZH_TW2, ZH_TW3, ZH_TW4, ZH_TW5, ZH_TW6, ZH_TW7)
 
     private lateinit var filePath: String
 
